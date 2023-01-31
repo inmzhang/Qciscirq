@@ -5,7 +5,7 @@ with open('README.md', encoding='UTF-8') as f:
 
 setup(
     name='Qciscirq',
-    version='0.1',
+    version='0.1-beta',
     packages=find_packages('src'),
     package_dir={'': 'src'},
     url='',

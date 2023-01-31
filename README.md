@@ -1,6 +1,6 @@
 # Qciscirq
 
-> Latest version: v0.1
+> Current version: v0.1-beta
 
 Adaptors for translating quantum circuits between `QCIS` and `cirq.Circuit`.
 
