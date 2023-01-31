@@ -1,13 +1,15 @@
 name: ci
 
+on:
+  push:
+    branches:
+      - master
+
+
 jobs:
   pip_install:
     runs-on: ubuntu-latest
-    on:
-      push:
-        branches:
-          - master
-
+    if: github.event.name == 'push'
     steps:
       - uses: actions/checkout@v3
 
@@ -30,9 +32,7 @@ jobs:
   build_sdist:
     name: Build SDist
     runs-on: ubuntu-latest
-    on:
-      release:
-        types: [ created ]
+    if: github.event_name == 'release' && github.event.action == 'created'
     steps:
       - uses: actions/checkout@v3
 
