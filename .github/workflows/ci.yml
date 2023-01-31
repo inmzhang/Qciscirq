@@ -31,9 +31,8 @@ jobs:
         run: flake8 ./src ./tests
 
   build_sdist:
-    name: Build SDist
     runs-on: ubuntu-latest
-    if: github.event_name == 'release' && github.event.action == 'published'
+    if: github.event_name == 'release'
     steps:
       - uses: actions/checkout@v3
 
