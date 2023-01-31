@@ -29,3 +29,6 @@ MANIFEST
 
 # jetbrains
 .idea
+
+# dev notes
+dev_notes.md
