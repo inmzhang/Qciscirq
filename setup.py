@@ -2,8 +2,6 @@ from setuptools import setup, find_packages
 
 with open('README.md', encoding='UTF-8') as f:
     long_description = f.read()
-with open('requirements.txt', encoding='UTF-8') as f:
-    requirements = [line.split()[0] for line in f.read().splitlines()]
 
 setup(
     name='Qciscirq',
@@ -18,9 +16,7 @@ setup(
     long_description=long_description,
     long_description_content_type='text/markdown',
     python_requires='>=3.8.0',
-    install_requires=requirements,
+    install_requires=['cirq>=1.0.0'],
     ext_package='pytest',
-    package_data={'': ['requirements.txt']},
-    include_package_data=True,
     tests_require=['pytest'],
 )
