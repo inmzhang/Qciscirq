@@ -1,15 +1,12 @@
 name: ci
 
-on:
-  release:
-    types: [created]
-  push:
-    branches:
-     - master
-
 jobs:
   pip_install:
     runs-on: ubuntu-latest
+    on:
+      push:
+        branches:
+          - master
 
     steps:
       - uses: actions/checkout@v3
@@ -33,7 +30,9 @@ jobs:
   build_sdist:
     name: Build SDist
     runs-on: ubuntu-latest
-    if: github.event_name == 'release'
+    on:
+      release:
+        types: [ created ]
     steps:
       - uses: actions/checkout@v3
 
@@ -43,26 +42,6 @@ jobs:
       - name: Check metadata
         run: pipx run twine check dist/*
 
-      - uses: actions/upload-artifact@v3
+      - uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          path: dist/*.tar.gz
-
-  upload_pypi:
-    name: Upload to pypi
-    needs: [build_sdist]
-    runs-on: ubuntu-latest
-    steps:
-     - uses: actions/setup-python@v4
-       with:
-         python-version: "3.8"
-
-     - uses: actions/download-artifact@v3
-       with:
-         name: artifact
-         path: dist
-
-     - uses: pypa/gh-action-pypi-publish@release/v1
-       with:
-         password: ${{ secrets.PYPI_API_TOKEN }}
-
-
+          password: ${{ secrets.PYPI_API_TOKEN }}
