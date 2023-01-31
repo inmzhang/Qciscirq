@@ -12,17 +12,17 @@ jobs:
     name: Build SDist
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+     - uses: actions/checkout@v3
 
-    - name: Build SDist
-      run: pipx run build --sdist
+     - name: Build SDist
+       run: pipx run build --sdist
 
-    - name: Check metadata
-      run: pipx run twine check dist/*
+     - name: Check metadata
+       run: pipx run twine check dist/*
 
-    - uses: actions/upload-artifact@v3
-      with:
-        path: dist/*.tar.gz
+     - uses: actions/upload-artifact@v3
+       with:
+         path: dist/*.tar.gz
 
   pip_install:
     strategy:
@@ -31,9 +31,9 @@ jobs:
         platform: [ windows-latest, macos-latest, ubuntu-latest ]
         python-version: [ "3.8" ]
 
-      runs-on: ${{ matrix.platform }}
+    runs-on: ${{ matrix.platform }}
 
-      steps:
+    steps:
       - uses: actions/checkout@v3
 
       - uses: actions/setup-python@v4
@@ -58,15 +58,17 @@ jobs:
     runs-on: ubuntu-latest
     if: .github.event_name == 'push' && startsWith(.github.event.ref, 'refs/tags/v')
     steps:
-    - uses: actions/setup-python@v4
-      with:
-        python-version: "3.8"
+     - uses: actions/setup-python@v4
+       with:
+         python-version: "3.8"
 
-    - uses: actions/download-artifact@v3
-      with:
-        name: artifact
-        path: dist
+     - uses: actions/download-artifact@v3
+       with:
+         name: artifact
+         path: dist
 
-    - uses: pypa/gh-action-pypi-publish@v1.5.1
-      with:
-        password: ${{ secrets.PYPI_API_TOKEN }}
+     - uses: pypa/gh-action-pypi-publish@v1.5.1
+       with:
+         password: ${{ secrets.PYPI_API_TOKEN }}
+
+
