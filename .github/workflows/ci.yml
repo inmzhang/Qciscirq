@@ -1,8 +1,8 @@
 name: ci
 
 on:
-  workflow_dispatch:
-  pull_request:
+  release:
+    types: [created]
   push:
     branches:
      - master
@@ -50,7 +50,7 @@ jobs:
     name: Upload to pypi
     needs: [build_sdist]
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
+    if: github.event_name == 'release'
     steps:
      - uses: actions/setup-python@v4
        with:
