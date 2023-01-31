@@ -1,12 +1,9 @@
 name: ci
 
 on:
-  release:
-    types: [published]
   push:
     branches:
       - 'master'
-
 
 jobs:
   pip_install:
@@ -29,19 +26,3 @@ jobs:
 
       - name: flake8
         run: flake8 ./src ./tests
-
-  build_sdist:
-    runs-on: ubuntu-latest
-    if: github.event_name == 'release'
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Build SDist
-        run: pipx run build --sdist
-
-      - name: Check metadata
-        run: pipx run twine check dist/*
-
-      - uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          password: ${{ secrets.PYPI_API_TOKEN }}
