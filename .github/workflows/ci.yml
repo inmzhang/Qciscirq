@@ -3,11 +3,14 @@ name: ci
 on:
   push:
     branches:
-      - 'master'
+     - master
 
 jobs:
   pip_install:
     runs-on: ubuntu-latest
+    on:
+      push:
+
     steps:
       - uses: actions/checkout@v3
 
@@ -26,3 +29,22 @@ jobs:
 
       - name: flake8
         run: flake8 ./src ./tests
+
+  build_sdist:
+    name: Build SDist
+    runs-on: ubuntu-latest
+    on:
+      release:
+        types: [ created ]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build SDist
+        run: pipx run build --sdist
+
+      - name: Check metadata
+        run: pipx run twine check dist/*
+
+      - uses: actions/upload-artifact@v3
+        with:
+          path: dist/*.tar.gz
