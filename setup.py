@@ -7,7 +7,7 @@ with open('requirements.txt', encoding='UTF-8') as f:
 
 setup(
     name='Qciscirq',
-    version='0.1.0',
+    version='0.1',
     packages=find_packages('src'),
     package_dir={'': 'src'},
     url='',
@@ -20,5 +20,7 @@ setup(
     python_requires='>=3.8.0',
     install_requires=requirements,
     ext_package='pytest',
+    package_data={'': ['requirements.txt']},
+    include_package_data=True,
     tests_require=['pytest'],
 )
